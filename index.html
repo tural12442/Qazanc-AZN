@@ -27,14 +27,14 @@ header {
   letter-spacing: 0.5px;
 }
 
-/* --- Konteyner --- */
+/* Konteyner */
 .container {
   max-width: 480px;
   margin: 0 auto;
   padding: 20px;
 }
 
-/* --- Balans Kartı --- */
+/* Balans Kartı */
 .balance-card {
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(255,255,255,0.1);
@@ -47,7 +47,7 @@ header {
 .balance-card .amount { font-size: 28px; font-weight: 700; }
 .balance-card .sub { font-size: 14px; color: #9ca3af; margin-top: 5px; }
 
-/* --- Reklam Kartı --- */
+/* Reklam Kartı */
 .ad-card {
   background: linear-gradient(135deg, #6d28d9, #8b5cf6);
   border-radius: 22px;
@@ -70,7 +70,8 @@ header {
   color: white; border: none; border-radius: 16px; padding: 16px;
   font-size: 18px; font-weight: 700; cursor: pointer; transition: 0.3s; margin-top: 8px;
 }
-.ad-btn:hover { transform: scale(1.04); box-shadow: 0 10px 25px rgba(16,185,129,0.4); }
+.ad-btn:hover:not(:disabled) { transform: scale(1.04); box-shadow: 0 10px 25px rgba(16,185,129,0.4); }
+.ad-btn:disabled { background: gray; cursor: not-allowed; }
 
 .page { display: none; }
 .page.active { display: block; animation: fadeIn 0.5s ease; }
@@ -203,13 +204,21 @@ function updateUI(){
 updateUI();
 
 adBtn.addEventListener('click',()=>{
-  if(adsWatched>=LIMIT){alert('Gündəlik 50 reklam limitinə çatmısınız!');return;}
+  if(adsWatched>=LIMIT){
+    timerEl.textContent='📢 Bu gün bütün reklamları izlədiniz!';
+    return;
+  }
   if(typeof show_10024800==='function'){ show_10024800(); }
-  adBtn.disabled=true; timerEl.textContent='İzlənir...';
+  adBtn.disabled=true;
+  timerEl.textContent='İzlənir...';
   setTimeout(()=>{
     balance+=REWARD; adsWatched++; localStorage.setItem(COUNT_KEY,adsWatched);
     updateUI(); timerEl.textContent='✅ +0.003 ₼ əlavə olundu!';
-    adBtn.disabled=false; setTimeout(()=>timerEl.textContent='',2000);
+    let wait=10;
+    const interval=setInterval(()=>{
+      timerEl.textContent=`⏳ Növbəti reklam üçün gözləyin: ${wait--}s`;
+      if(wait<0){ clearInterval(interval); adBtn.disabled=false; timerEl.textContent=''; }
+    },1000);
   },2000);
 });
 
