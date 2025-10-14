@@ -8,30 +8,20 @@
 <script src="//libtl.com/sdk.js" data-zone="10024800" data-sdk="show_10024800"></script>
 <style>
 body{
-  margin:0;
-  font-family:'Inter',sans-serif;
+  margin:0;font-family:'Inter',sans-serif;
   background:linear-gradient(180deg,#0a1128,#1e3a8a);
-  color:#fff;
-  overflow-x:hidden;
-  padding-bottom:90px;
+  color:#fff;overflow-x:hidden;padding-bottom:90px;
 }
 header{
-  text-align:center;
-  font-size:30px;
-  font-weight:700;
-  padding:25px 10px;
+  text-align:center;font-size:30px;font-weight:700;padding:25px 10px;
   background:linear-gradient(90deg,#1e40af,#3b82f6);
   box-shadow:0 4px 20px rgba(0,0,0,0.4);
-  color:#fff;
-  letter-spacing:1px;
-  text-shadow:0 0 10px #60a5fa;
+  color:#fff;letter-spacing:1px;text-shadow:0 0 10px #60a5fa;
 }
 .container{max-width:480px;margin:0 auto;padding:20px;}
 .balance-card{
-  background:rgba(255,255,255,0.05);
-  border:1px solid rgba(255,255,255,0.1);
-  border-radius:20px;
-  padding:25px;margin-bottom:25px;
+  background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);
+  border-radius:20px;padding:25px;margin-bottom:25px;
   box-shadow:0 8px 25px rgba(0,0,0,0.3);
 }
 .balance-card h3{font-size:15px;color:#9ca3af;margin-bottom:5px;}
@@ -39,8 +29,7 @@ header{
 .balance-card .sub{font-size:14px;color:#9ca3af;margin-top:5px;}
 .ad-card{
   background:linear-gradient(135deg,#1d4ed8,#3b82f6);
-  border-radius:22px;
-  padding:25px;text-align:center;
+  border-radius:22px;padding:25px;text-align:center;
   box-shadow:0 8px 25px rgba(59,130,246,0.5);
 }
 .ad-card h2{font-size:22px;font-weight:700;margin:0;}
@@ -56,24 +45,6 @@ header{
 .ad-btn:disabled{background:gray;cursor:not-allowed;}
 .page{display:none;}
 .page.active{display:block;animation:fadeIn 0.5s ease;}
-.wallet-card{
-  background:rgba(255,255,255,0.05);
-  border-radius:20px;
-  padding:25px;
-  box-shadow:0 8px 25px rgba(0,0,0,0.4);
-}
-.wallet-card select,.wallet-card input{
-  width:100%;padding:12px;margin-top:10px;border:none;
-  border-radius:10px;font-size:15px;background:rgba(255,255,255,0.1);color:#fff;
-}
-.wallet-card input::placeholder{color:#ccc;}
-.withdraw-btn{
-  width:100%;background:linear-gradient(135deg,#10b981,#3b82f6);
-  color:#fff;border:none;border-radius:14px;padding:14px;
-  font-size:16px;font-weight:700;margin-top:20px;cursor:pointer;
-}
-.alert{background:#ef4444;padding:10px;border-radius:12px;text-align:center;margin-top:10px;display:none;font-weight:600;}
-.success{background:#22c55e;}
 .menu{
   position:fixed;bottom:15px;left:50%;transform:translateX(-50%);
   width:90%;display:flex;justify-content:space-around;
@@ -86,6 +57,33 @@ header{
   color:#fff;border:none;border-radius:15px;font-weight:600;
 }
 .timer{text-align:center;font-size:16px;color:#facc15;margin-top:10px;}
+/* --- Cüzdan dizaynı --- */
+.wallet-options{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:15px;
+}
+.method-btn{
+  background:rgba(255,255,255,0.08);border:none;border-radius:15px;
+  padding:18px;color:#fff;font-size:17px;font-weight:600;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  cursor:pointer;transition:0.3s;
+}
+.method-btn:hover{background:rgba(59,130,246,0.3);}
+.withdraw-form{display:none;margin-top:20px;}
+.back-btn{
+  background:rgba(255,255,255,0.15);border:none;border-radius:12px;
+  padding:10px 14px;color:#fff;cursor:pointer;margin-bottom:15px;
+}
+.wallet-card input{
+  width:100%;padding:12px;margin-top:10px;border:none;
+  border-radius:10px;font-size:15px;background:rgba(255,255,255,0.1);color:#fff;
+}
+.withdraw-btn{
+  width:100%;background:linear-gradient(135deg,#10b981,#3b82f6);
+  color:#fff;border:none;border-radius:14px;padding:14px;
+  font-size:16px;font-weight:700;margin-top:20px;cursor:pointer;
+}
+.alert{background:#ef4444;padding:10px;border-radius:12px;text-align:center;margin-top:10px;display:none;font-weight:600;}
+.success{background:#22c55e;}
 </style>
 </head>
 <body>
@@ -101,10 +99,10 @@ header{
     </div>
 
     <div class="ad-card">
-      <h2>50 Reklam İzlə</h2>
+      <h2>75 Reklam İzlə</h2>
       <p>0.15 ₼ qazanın</p>
       <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
-      <p style="font-size:14px;">İzlənilib <span id="adsCount">0</span> / 50</p>
+      <p style="font-size:14px;">İzlənilib <span id="adsCount">0</span> / 75</p>
       <button class="ad-btn" id="adBtn">▶ Reklam İzlə</button>
       <div class="timer" id="timer"></div>
     </div>
@@ -119,23 +117,26 @@ header{
     </p>
   </div>
 
-  <!-- Cüzdan -->
+  <!-- 💳 Cüzdan -->
   <div id="walletPage" class="page">
     <h2>💳 Çıxarış</h2>
-    <div class="wallet-card">
-      <select id="method">
-        <option value="">Metod seçin</option>
-        <option value="m10">M10</option>
-        <option value="azercell">Azercell</option>
-        <option value="bakcell">Bakcell</option>
-        <option value="nar">Nar</option>
-        <option value="bank">Bank Kartı</option>
-        <option value="usdt">USDT (TON)</option>
-      </select>
-      <input type="text" id="details" placeholder="Nömrə / Kart / TON Adresi">
-      <input type="number" id="amount" placeholder="Məbləğ (AZN)">
-      <button class="withdraw-btn" id="withdrawBtn">Çıxarış Et</button>
-      <div class="alert" id="withdrawAlert"></div>
+    <div class="wallet-options" id="walletOptions">
+      <button class="method-btn" data-method="m10">📞 M10</button>
+      <button class="method-btn" data-method="azercell">📞 Azercell</button>
+      <button class="method-btn" data-method="bakcell">📞 Bakcell</button>
+      <button class="method-btn" data-method="nar">📞 Nar</button>
+      <button class="method-btn" data-method="bank">💳 Bank Kartı</button>
+      <button class="method-btn" data-method="usdt">💵 USDT (TON)</button>
+    </div>
+
+    <div class="withdraw-form" id="withdrawForm">
+      <button class="back-btn" onclick="backToMethods()">⬅ Geri</button>
+      <div class="wallet-card">
+        <input type="text" id="details" placeholder="">
+        <input type="number" id="amount" placeholder="Məbləğ (AZN)">
+        <button class="withdraw-btn" id="withdrawBtn">Çıxarış Et</button>
+        <div class="alert" id="withdrawAlert"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -156,8 +157,9 @@ const adBtn=document.getElementById('adBtn');
 const timerEl=document.getElementById('timer');
 const progressFill=document.getElementById('progressFill');
 const adsCountEl=document.getElementById('adsCount');
-const LIMIT=50,REWARD=0.003;
+const LIMIT=75,REWARD=0.002;
 
+/* 🇦🇿 Azərbaycan vaxtı ilə 00:00-da sıfırlanma */
 function todayAZ(){
   const now=new Date();
   return new Date(now.getTime()+(4*3600000-now.getTimezoneOffset()*60000)).toISOString().split('T')[0];
@@ -171,6 +173,10 @@ function resetDaily(){
   }
 }
 resetDaily();
+
+/* Avtomatik hər 1 dəqiqədə bir yoxlayır — 00:00 olanda sıfırlanır */
+setInterval(resetDaily,60000);
+
 function updateUI(){
   localStorage.setItem(BALANCE_KEY,balance.toFixed(4));
   balanceEl.textContent=balance.toFixed(4);
@@ -180,17 +186,14 @@ function updateUI(){
 }
 updateUI();
 
+/* Reklam izləmə */
 adBtn.addEventListener('click',()=>{
   if(adsWatched>=LIMIT){timerEl.textContent='📣 Bu gün bütün reklamları izlədiniz!';return;}
   if(typeof show_10024800==='function'){show_10024800();}
-  adBtn.disabled=true;
-  timerEl.textContent='İzlənir...';
+  adBtn.disabled=true;timerEl.textContent='İzlənir...';
   setTimeout(()=>{
-    balance+=REWARD;
-    adsWatched++;
-    localStorage.setItem(COUNT_KEY,adsWatched);
-    updateUI();
-    timerEl.textContent='✅ +0.003 ₼ əlavə olundu!';
+    balance+=REWARD;adsWatched++;localStorage.setItem(COUNT_KEY,adsWatched);
+    updateUI();timerEl.textContent='✅ +0.002 ₼ əlavə olundu!';
     let wait=10;
     const interval=setInterval(()=>{
       timerEl.textContent=`⏳ Növbəti reklam üçün ${wait--}s`;
@@ -199,35 +202,54 @@ adBtn.addEventListener('click',()=>{
   },2000);
 });
 
+/* Görəv */
 const joinBtn=document.getElementById('joinChannelBtn');
 if(localStorage.getItem('joined')){
-  joinBtn.disabled=true;
-  joinBtn.textContent='✅ Bonus alındı!';
+  joinBtn.disabled=true;joinBtn.textContent='✅ Bonus alındı!';
 }
 joinBtn.onclick=()=>{
   if(localStorage.getItem('joined'))return;
   balance+=0.05;updateUI();
   localStorage.setItem('joined','1');
-  joinBtn.disabled=true;
-  joinBtn.textContent='✅ Bonus alındı!';
+  joinBtn.disabled=true;joinBtn.textContent='✅ Bonus alındı!';
   window.open('https://t.me/qazancazicmasi','_blank');
 };
 
+/* 💳 Cüzdan sistemi */
+let selectedMethod='';
+const methods={
+  m10:{ph:'9 rəqəmli nömrə (050xxxxxxx)',min:3},
+  azercell:{ph:'9 rəqəmli nömrə (050xxxxxxx)',min:3},
+  bakcell:{ph:'9 rəqəmli nömrə (055xxxxxxx)',min:3},
+  nar:{ph:'9 rəqəmli nömrə (070xxxxxxx)',min:3},
+  bank:{ph:'16 rəqəmli kart nömrəsi',min:3},
+  usdt:{ph:'TON adresinizi daxil edin',min:17}
+};
+document.querySelectorAll('.method-btn').forEach(btn=>{
+  btn.onclick=()=>{
+    selectedMethod=btn.dataset.method;
+    document.getElementById('walletOptions').style.display='none';
+    document.getElementById('withdrawForm').style.display='block';
+    document.getElementById('details').placeholder=methods[selectedMethod].ph;
+  };
+});
+function backToMethods(){
+  document.getElementById('withdrawForm').style.display='none';
+  document.getElementById('walletOptions').style.display='grid';
+}
 document.getElementById('withdrawBtn').onclick=()=>{
-  const method=document.getElementById('method').value;
   const details=document.getElementById('details').value.trim();
   const amt=Number(document.getElementById('amount').value);
   const alertBox=document.getElementById('withdrawAlert');
   alertBox.style.display='none';alertBox.classList.remove('success');
-  if(!method){alertBox.textContent='Metod seçin';alertBox.style.display='block';return;}
+  if(!selectedMethod){alertBox.textContent='Metod seçin';alertBox.style.display='block';return;}
   if(!details){alertBox.textContent='Detalları daxil edin';alertBox.style.display='block';return;}
-  let min=method==='usdt'?17:3;
+  let min=methods[selectedMethod].min;
   if(amt<min){alertBox.textContent=`Minimum məbləğ ${min} AZN-dir`;alertBox.style.display='block';return;}
   if(amt>balance){alertBox.textContent='Balans kifayət etmir';alertBox.style.display='block';return;}
   balance-=amt;updateUI();
-  alertBox.textContent='✅ Çıxarış təsdiqləndi!';alertBox.classList.add('success');alertBox.style.display='block';
+  alertBox.textContent='✅ Çıxarış uğurla göndərildi!';alertBox.classList.add('success');alertBox.style.display='block';
 };
-
 function showPage(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById(id).classList.add('active');
