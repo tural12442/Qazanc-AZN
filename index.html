@@ -1,236 +1,107 @@
 <!DOCTYPE html>
 <html lang="az">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
 <title>Qazanc AZ</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <script src="//libtl.com/sdk.js" data-zone="10024800" data-sdk="show_10024800"></script>
 
 <style>
-* { touch-action: manipulation; -ms-touch-action: manipulation; }
-
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  overflow: hidden; /* Sürüşdürmək tam bağlandı */
-  font-family: 'Inter', sans-serif;
-  background: linear-gradient(180deg, #0a1128, #1e3a8a);
-  color: #fff;
+:root{
+  --bg1:#071226;--bg2:#0e2340;--accent:#3b82f6;--green:#10b981;--muted:#9ca3af;
 }
-
-header {
-  text-align: center;
-  font-size: 30px;
-  font-weight: 700;
-  padding: 25px 10px;
-  background: linear-gradient(90deg, #1e40af, #3b82f6);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-  color: #fff;
-  letter-spacing: 1px;
-  text-shadow: 0 0 10px #60a5fa;
-}
-
-.container {
-  position: absolute;
-  top: 90px;
-  bottom: 90px;
-  left: 0;
-  right: 0;
-  overflow-y: auto;
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-/* Balans kartı */
-.balance-card {
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 24px;
-  padding: 30px;
-  margin-bottom: 28px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.35);
-}
-.balance-card h3 { font-size: 15px; color: #9ca3af; margin-bottom: 6px; }
-.balance-card .amount { font-size: 30px; font-weight: 700; }
-.balance-card .sub { font-size: 14px; color: #9ca3af; margin-top: 6px; }
-
-/* Reklam kartı */
-.ad-card {
-  background: linear-gradient(135deg, #6d28d9, #3b82f6);
-  border-radius: 24px;
-  padding: 30px;
-  text-align: center;
-  box-shadow: 0 10px 25px rgba(59,130,246,0.5);
-}
-.ad-card h2 { font-size: 22px; font-weight: 700; margin: 0; }
-.ad-card p { margin: 8px 0; color: #e0e7ff; }
-.progress { height: 6px; width: 100%; background: rgba(255,255,255,0.15); border-radius: 4px; margin: 15px 0; }
-.progress-fill { height: 100%; background: #fbbf24; border-radius: 4px; width: 0%; transition: width 0.5s ease; }
-
-/* Reklam düyməsi — bir az genişləndirilmiş */
-.ad-btn {
-  width: 90%;
-  max-width: 400px;
-  background: linear-gradient(135deg, #3b82f6, #10b981);
-  color: #fff;
-  border: none;
-  border-radius: 18px;
-  padding: 20px;
-  font-size: 20px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: 0.3s;
-  margin-top: 12px;
-}
-.ad-btn:hover:not(:disabled) {
-  transform: scale(1.04);
-  box-shadow: 0 10px 25px rgba(16,185,129,0.4);
-}
-.ad-btn:disabled { background: gray; cursor: not-allowed; }
-
-.page { display: none; }
-.page.active { display: block; animation: fadeIn 0.5s ease; }
-
-.menu {
-  position: fixed;
-  bottom: 15px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
-  display: flex;
-  justify-content: space-around;
-  background: rgba(30,41,59,0.9);
-  padding: 12px;
-  border-radius: 25px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.5);
-  backdrop-filter: blur(6px);
-}
-.menu button {
-  flex: 1;
-  margin: 0 4px;
-  padding: 10px;
-  font-size: 15px;
-  background: linear-gradient(135deg, #3b82f6, #10b981);
-  color: #fff;
-  border: none;
-  border-radius: 15px;
-  font-weight: 600;
-}
-.timer { text-align: center; font-size: 16px; color: #facc15; margin-top: 10px; }
-
-/* Cüzdan dizaynı */
-.wallet-options {
-  display: grid;
-  grid-template-columns: repeat(2,1fr);
-  gap: 15px;
-}
-.method-btn {
-  background: rgba(255,255,255,0.08);
-  border: none;
-  border-radius: 15px;
-  padding: 18px;
-  color: #fff;
-  font-size: 17px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.method-btn:hover { background: rgba(59,130,246,0.3); }
-.withdraw-form { display: none; margin-top: 20px; }
-.back-btn {
-  background: rgba(255,255,255,0.15);
-  border: none;
-  border-radius: 12px;
-  padding: 10px 14px;
-  color: #fff;
-  cursor: pointer;
-  margin-bottom: 15px;
-}
-.wallet-card input {
-  width: 100%;
-  padding: 12px;
-  margin-top: 10px;
-  border: none;
-  border-radius: 10px;
-  font-size: 15px;
-  background: rgba(255,255,255,0.1);
-  color: #fff;
-}
-.withdraw-btn {
-  width: 100%;
-  background: linear-gradient(135deg, #10b981, #3b82f6);
-  color: #fff;
-  border: none;
-  border-radius: 14px;
-  padding: 14px;
-  font-size: 16px;
-  font-weight: 700;
-  margin-top: 20px;
-  cursor: pointer;
-}
-.alert { background: #ef4444; padding: 10px; border-radius: 12px; text-align: center; margin-top: 10px; display: none; font-weight: 600; }
-.success { background: #22c55e; }
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:linear-gradient(180deg,var(--bg1),var(--bg2));color:#fff;min-height:100vh;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;overflow:hidden;touch-action:manipulation;}
+header{text-align:center;padding:20px;font-size:24px;font-weight:700;background:#0f1724;box-shadow:0 4px 20px rgba(0,0,0,.4);}
+.container{max-width:480px;margin:auto;padding:20px;}
+.page{display:none;animation:fadeIn .4s ease;}
+.page.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+/* === Balans kartı === */
+.balance{background:rgba(255,255,255,.06);border-radius:18px;padding:20px;margin-bottom:20px;}
+.balance h3{font-size:15px;color:var(--muted);}
+.balance .amount{font-size:32px;font-weight:700;margin-top:6px;}
+.balance .sub{color:var(--green);font-size:14px;margin-top:4px;}
+/* === Reklam kartı === */
+.ad-card{background:linear-gradient(135deg,#3b82f6,#8b5cf6);border-radius:22px;padding:22px;text-align:center;box-shadow:0 8px 25px rgba(59,130,246,0.5);}
+.ad-card h2{font-size:26px;margin:0;}
+.ad-card p{margin:6px 0;color:#e0e7ff;}
+.progress{height:8px;background:rgba(255,255,255,0.2);border-radius:6px;overflow:hidden;margin-top:10px;}
+.progress-fill{height:100%;background:#fbbf24;width:0%;transition:width .4s;}
+.ad-btn{width:100%;margin-top:18px;padding:16px;font-size:18px;font-weight:700;border:none;border-radius:14px;background:linear-gradient(90deg,var(--green),var(--accent));color:#fff;cursor:pointer;}
+.ad-btn:disabled{background:gray;cursor:not-allowed;}
+#msg{text-align:center;margin-top:10px;font-size:15px;color:#fde68a;}
+/* === Görəvlər === */
+.task-card{background:rgba(255,255,255,0.06);border-radius:18px;padding:20px;text-align:center;}
+.task-card h2{font-size:22px;margin-bottom:8px;}
+.task-card button{width:100%;padding:14px;margin-top:10px;font-size:16px;font-weight:700;border:none;border-radius:14px;background:linear-gradient(90deg,var(--accent),var(--green));color:#fff;cursor:pointer;}
+/* === Cüzdan === */
+.method-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+.method{background:rgba(255,255,255,0.07);border:none;border-radius:14px;padding:18px;font-weight:700;font-size:16px;color:#fff;cursor:pointer;text-align:center;}
+.form{display:none;margin-top:18px;}
+.form input{width:100%;padding:12px;margin-top:8px;border:none;border-radius:10px;background:rgba(255,255,255,.1);color:#fff;font-size:15px;}
+.form button{width:100%;padding:14px;margin-top:12px;border:none;border-radius:12px;background:linear-gradient(135deg,var(--green),var(--accent));color:#fff;font-weight:700;font-size:16px;cursor:pointer;}
+.alert{display:none;margin-top:10px;padding:10px;border-radius:10px;font-weight:700;text-align:center;}
+.success{background:#16a34a;}
+.error{background:#ef4444;}
+/* === Menyu === */
+.menu{position:fixed;bottom:15px;left:50%;transform:translateX(-50%);width:92%;display:flex;justify-content:space-around;background:rgba(30,41,59,0.9);padding:10px;border-radius:20px;box-shadow:0 6px 20px rgba(0,0,0,.5);}
+.menu button{flex:1;margin:0 4px;padding:10px;border:none;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--green));color:#fff;font-weight:700;}
 </style>
 </head>
 <body>
 <header>💎 Qazanc AZ</header>
 
 <div class="container">
+  <!-- Ana səhifə -->
   <div id="adsPage" class="page active">
-    <div class="balance-card">
+    <div class="balance">
       <h3>Mövcud balansınız</h3>
       <div class="amount"><span id="balance">0.0000</span> ₼</div>
-      <div class="sub">≈ $<span id="usdValue">0.00</span></div>
+      <div class="sub">≈ $<span id="usd">0.00</span></div>
     </div>
-
     <div class="ad-card">
       <h2>75 Reklam İzlə</h2>
       <p>0.15 ₼ qazanın</p>
-      <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
-      <p style="font-size:14px;">İzlənilib <span id="adsCount">0</span> / 75</p>
-      <button class="ad-btn" id="adBtn">▶ Reklam İzlə</button>
-      <div class="timer" id="timer"></div>
+      <div class="progress"><div class="progress-fill" id="progress"></div></div>
+      <p>İzlənilib: <span id="adsCount">0</span> / 75</p>
+      <button id="adBtn" class="ad-btn">▶ Reklam İzlə</button>
+      <div id="msg"></div>
     </div>
   </div>
 
+  <!-- Görəvlər -->
   <div id="tasksPage" class="page">
-    <h2>🎯 Görəvlər</h2>
-    <button class="ad-btn" id="joinChannelBtn">📢 Kanala Qoşul – 0.05 ₼</button>
-    <p style="text-align:center;margin-top:10px;">
-      <a href="https://t.me/qazancazicmasi" target="_blank" style="color:#60a5fa;">@qazancazicmasi kanalına keç</a>
-    </p>
+    <div class="task-card">
+      <h2>📢 Kanala Qoşul</h2>
+      <p>Qoşul və 0.05 ₼ bonus qazan!</p>
+      <button id="joinBtn">Kanala Qoşul</button>
+    </div>
   </div>
 
+  <!-- Cüzdan -->
   <div id="walletPage" class="page">
-    <h2>💳 Çıxarış</h2>
-    <div class="wallet-options" id="walletOptions">
-      <button class="method-btn" data-method="m10">📞 M10</button>
-      <button class="method-btn" data-method="azercell">📞 Azercell</button>
-      <button class="method-btn" data-method="bakcell">📞 Bakcell</button>
-      <button class="method-btn" data-method="nar">📞 Nar</button>
-      <button class="method-btn" data-method="bank">💳 Bank Kartı</button>
-      <button class="method-btn" data-method="usdt">💵 USDT (TON)</button>
+    <h2 style="text-align:center;margin-bottom:12px;">💳 Çıxarış</h2>
+    <div class="method-grid" id="methods">
+      <div class="method" data-type="m10">📞 M10</div>
+      <div class="method" data-type="azercell">📞 Azercell</div>
+      <div class="method" data-type="bakcell">📞 Bakcell</div>
+      <div class="method" data-type="nar">📞 Nar</div>
+      <div class="method" data-type="bank">💳 Bank Kartı</div>
+      <div class="method" data-type="usdt">💵 USDT (TON)</div>
     </div>
-
-    <div class="withdraw-form" id="withdrawForm">
-      <button class="back-btn" onclick="backToMethods()">⬅ Geri</button>
-      <div class="wallet-card">
-        <input type="text" id="details" placeholder="">
-        <input type="number" id="amount" placeholder="Məbləğ (AZN)">
-        <button class="withdraw-btn" id="withdrawBtn">Çıxarış Et</button>
-        <div class="alert" id="withdrawAlert"></div>
-      </div>
+    <div class="form" id="form">
+      <button id="backBtn" style="background:none;border:none;color:#60a5fa;font-weight:700;">⬅ Geri</button>
+      <input id="details" placeholder="">
+      <input id="amount" type="number" placeholder="Məbləğ (AZN)">
+      <button id="withdrawBtn">Çıxarış Et</button>
+      <div id="alert" class="alert"></div>
     </div>
   </div>
 </div>
 
+<!-- Menyu -->
 <div class="menu">
   <button onclick="showPage('adsPage')">🏠 Reklam</button>
   <button onclick="showPage('tasksPage')">🎯 Görəvlər</button>
@@ -238,119 +109,73 @@ header {
 </div>
 
 <script>
-const BALANCE_KEY='balance',DATE_KEY='date',COUNT_KEY='adsCount';
-let balance=Number(localStorage.getItem(BALANCE_KEY)||0);
-let adsWatched=Number(localStorage.getItem(COUNT_KEY)||0);
-const balanceEl=document.getElementById('balance');
-const usdEl=document.getElementById('usdValue');
-const adBtn=document.getElementById('adBtn');
-const timerEl=document.getElementById('timer');
-const progressFill=document.getElementById('progressFill');
-const adsCountEl=document.getElementById('adsCount');
+/* --- Reklam sistemi --- */
 const LIMIT=75,REWARD=0.002;
-
-/* 🇦🇿 Azərbaycan vaxtı ilə 00:00-da sıfırlanma */
-function todayAZ(){
-  const now=new Date();
-  return new Date(now.getTime()+(4*3600000-now.getTimezoneOffset()*60000)).toISOString().split('T')[0];
+const BAL_KEY='bal',COUNT_KEY='cnt',DATE_KEY='date',JOIN_KEY='joined';
+let bal=parseFloat(localStorage.getItem(BAL_KEY)||0);
+let cnt=parseInt(localStorage.getItem(COUNT_KEY)||0);
+function todayAZ(){const n=new Date();const utc=n.getTime()+n.getTimezoneOffset()*60000;const az=new Date(utc+4*3600000);return az.toISOString().split('T')[0];}
+if(localStorage.getItem(DATE_KEY)!==todayAZ()){cnt=0;localStorage.setItem(DATE_KEY,todayAZ());}
+function update(){
+  document.getElementById('balance').textContent=bal.toFixed(4);
+  document.getElementById('usd').textContent=(bal*0.59).toFixed(2);
+  document.getElementById('adsCount').textContent=cnt;
+  document.getElementById('progress').style.width=(cnt/LIMIT*100)+'%';
+  localStorage.setItem(BAL_KEY,bal);localStorage.setItem(COUNT_KEY,cnt);
 }
-function resetDaily(){
-  const saved=localStorage.getItem(DATE_KEY);
-  if(saved!==todayAZ()){
-    localStorage.setItem(DATE_KEY,todayAZ());
-    localStorage.setItem(COUNT_KEY,'0');
-    adsWatched=0;
-  }
-}
-resetDaily();
-setInterval(resetDaily,60000);
-
-function updateUI(){
-  localStorage.setItem(BALANCE_KEY,balance.toFixed(4));
-  balanceEl.textContent=balance.toFixed(4);
-  usdEl.textContent=(balance*0.59).toFixed(2);
-  adsCountEl.textContent=adsWatched;
-  progressFill.style.width=((adsWatched/LIMIT)*100)+'%';
-}
-updateUI();
-
-adBtn.addEventListener('click',()=>{
-  if(adsWatched>=LIMIT){timerEl.textContent='📣 Bu gün bütün reklamları izlədiniz!';return;}
-  if(typeof show_10024800==='function'){show_10024800();}
-  adBtn.disabled=true;
-  timerEl.textContent='İzlənir...';
+update();
+const adBtn=document.getElementById('adBtn'),msg=document.getElementById('msg');
+adBtn.onclick=()=>{
+  if(cnt>=LIMIT){msg.textContent='📣 Gündəlik limitə çatdınız!';return;}
+  try{if(typeof show_10024800==='function')show_10024800();}catch(e){}
+  adBtn.disabled=true;msg.textContent='İzlənir...';
   setTimeout(()=>{
-    balance+=REWARD;
-    adsWatched++;
-    localStorage.setItem(COUNT_KEY,adsWatched);
-    updateUI();
-    timerEl.textContent='✅ +0.002 ₼ əlavə olundu!';
-    let wait=10;
-    const interval=setInterval(()=>{
-      timerEl.textContent=`⏳ Növbəti reklam üçün ${wait--}s`;
-      if(wait<0){clearInterval(interval);adBtn.disabled=false;timerEl.textContent='';}
-    },1000);
-  },2000);
-});
+    bal+=REWARD;cnt++;update();
+    msg.textContent='✅ +0.002 ₼ əlavə olundu!';
+    let s=8;const t=setInterval(()=>{msg.textContent=`⏳ ${s--}s gözləyin`;if(s<0){clearInterval(t);adBtn.disabled=false;msg.textContent='';}},1000);
+  },2500);
+};
 
-const joinBtn=document.getElementById('joinChannelBtn');
-if(localStorage.getItem('joined')){
-  joinBtn.disabled=true;
-  joinBtn.textContent='✅ Bonus alındı!';
-}
+/* --- Görəvlər --- */
+const joinBtn=document.getElementById('joinBtn');
+if(localStorage.getItem(JOIN_KEY)){joinBtn.textContent='✅ Bonus alındı!';joinBtn.disabled=true;}
 joinBtn.onclick=()=>{
-  if(localStorage.getItem('joined'))return;
-  balance+=0.05;
-  updateUI();
-  localStorage.setItem('joined','1');
-  joinBtn.disabled=true;
-  joinBtn.textContent='✅ Bonus alındı!';
+  if(localStorage.getItem(JOIN_KEY))return;
+  bal+=0.05;localStorage.setItem(BAL_KEY,bal);localStorage.setItem(JOIN_KEY,'1');
+  joinBtn.textContent='✅ Bonus alındı!';joinBtn.disabled=true;
   window.open('https://t.me/qazancazicmasi','_blank');
+  update();
 };
 
-let selectedMethod='';
-const methods={
-  m10:{ph:'10 rəqəmli nömrə',min:3},
-  azercell:{ph:'10 rəqəmli nömrə (050xxxxxxx)',min:3},
-  bakcell:{ph:'10 rəqəmli nömrə (055xxxxxxx)',min:3},
-  nar:{ph:'10 rəqəmli nömrə (070xxxxxxx)',min:3},
-  bank:{ph:'16 rəqəmli kart nömrəsi',min:3},
-  usdt:{ph:'TON adresinizi daxil edin',min:17}
-};
-document.querySelectorAll('.method-btn').forEach(btn=>{
-  btn.onclick=()=>{
-    selectedMethod=btn.dataset.method;
-    document.getElementById('walletOptions').style.display='none';
-    document.getElementById('withdrawForm').style.display='block';
-    document.getElementById('details').placeholder=methods[selectedMethod].ph;
-  };
-});
-function backToMethods(){
-  document.getElementById('withdrawForm').style.display='none';
-  document.getElementById('walletOptions').style.display='grid';
-}
+/* --- Cüzdan --- */
+const methods=document.querySelectorAll('.method');
+const form=document.getElementById('form');const details=document.getElementById('details');
+const amount=document.getElementById('amount');const alertBox=document.getElementById('alert');
+let type='';
+const min={m10:3,azercell:3,bakcell:3,nar:3,bank:3,usdt:17};
+const ph={m10:'10 rəqəmli nömrə',azercell:'050xxxxxxx',bakcell:'055xxxxxxx',nar:'070xxxxxxx',bank:'16 rəqəmli kart nömrəsi',usdt:'TON adresi'};
+methods.forEach(m=>m.onclick=()=>{type=m.dataset.type;document.getElementById('methods').style.display='none';form.style.display='block';details.placeholder=ph[type];});
+document.getElementById('backBtn').onclick=()=>{form.style.display='none';document.getElementById('methods').style.display='grid';};
 document.getElementById('withdrawBtn').onclick=()=>{
-  const details=document.getElementById('details').value.trim();
-  const amt=Number(document.getElementById('amount').value);
-  const alertBox=document.getElementById('withdrawAlert');
+  const det=details.value.trim();const amt=parseFloat(amount.value);
   alertBox.style.display='none';
-  alertBox.classList.remove('success');
-  if(!selectedMethod){alertBox.textContent='Metod seçin';alertBox.style.display='block';return;}
-  if(!details){alertBox.textContent='Detalları daxil edin';alertBox.style.display='block';return;}
-  let min=methods[selectedMethod].min;
-  if(amt<min){alertBox.textContent=`Minimum məbləğ ${min} AZN-dir`;alertBox.style.display='block';return;}
-  if(amt>balance){alertBox.textContent='Balans kifayət etmir';alertBox.style.display='block';return;}
-  balance-=amt;
-  updateUI();
-  alertBox.textContent='✅ Çıxarış uğurla göndərildi!';
-  alertBox.classList.add('success');
-  alertBox.style.display='block';
+  if(!type){alertBox.textContent='Metod seçin';alertBox.className='alert error';alertBox.style.display='block';return;}
+  if(!det){alertBox.textContent='Detalları daxil edin';alertBox.className='alert error';alertBox.style.display='block';return;}
+  if(isNaN(amt)||amt<=0){alertBox.textContent='Məbləği düzgün daxil edin';alertBox.className='alert error';alertBox.style.display='block';return;}
+  if(amt<min[type]){alertBox.textContent=`Minimum məbləğ ${min[type]} AZN`;alertBox.className='alert error';alertBox.style.display='block';return;}
+  if(amt>bal){alertBox.textContent='Balans kifayət etmir';alertBox.className='alert error';alertBox.style.display='block';return;}
+  bal-=amt;localStorage.setItem(BAL_KEY,bal);update();
+  alertBox.textContent='✅ Çıxarış uğurla göndərildi!';alertBox.className='alert success';alertBox.style.display='block';
+  setTimeout(()=>{form.style.display='none';document.getElementById('methods').style.display='grid';},1500);
 };
 
-function showPage(id){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
+/* --- Səhifə keçidləri --- */
+function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');}
+
+/* --- Kopyalama və yaxınlaşdırmanı qadağan et --- */
+document.addEventListener('contextmenu',e=>e.preventDefault());
+document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&['c','x','a'].includes(e.key))e.preventDefault();});
+window.addEventListener('touchmove',e=>{if(e.scale&&e.scale!==1)e.preventDefault();},{passive:false});
 </script>
 </body>
 </html>
