@@ -1,120 +1,95 @@
 <!DOCTYPE html>
 <html lang="az">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Qazanc AZ</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<script src='//libtl.com/sdk.js' data-zone='10024800' data-sdk='show_10024800'></script>
-
+<script src="//libtl.com/sdk.js" data-zone="10024800" data-sdk="show_10024800"></script>
 <style>
-body {
-  margin: 0;
-  font-family: 'Inter', sans-serif;
-  background: linear-gradient(180deg, #0f172a, #1e293b);
-  color: #fff;
-  overflow-x: hidden;
-  padding-bottom: 90px;
+body{
+  margin:0;
+  font-family:'Inter',sans-serif;
+  background:linear-gradient(180deg,#0a1128,#1e3a8a);
+  color:#fff;
+  overflow-x:hidden;
+  padding-bottom:90px;
 }
-header {
-  text-align: center;
-  font-size: 28px;
-  font-weight: 700;
-  padding: 25px 10px;
-  background: rgba(30, 41, 59, 0.95);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-  color: #60a5fa;
-  letter-spacing: 0.5px;
+header{
+  text-align:center;
+  font-size:30px;
+  font-weight:700;
+  padding:25px 10px;
+  background:linear-gradient(90deg,#1e40af,#3b82f6);
+  box-shadow:0 4px 20px rgba(0,0,0,0.4);
+  color:#fff;
+  letter-spacing:1px;
+  text-shadow:0 0 10px #60a5fa;
 }
-
-/* Konteyner */
-.container {
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 20px;
+.container{max-width:480px;margin:0 auto;padding:20px;}
+.balance-card{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:20px;
+  padding:25px;margin-bottom:25px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.3);
 }
-
-/* Balans Kartı */
-.balance-card {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 20px;
-  padding: 25px;
-  margin-bottom: 25px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+.balance-card h3{font-size:15px;color:#9ca3af;margin-bottom:5px;}
+.balance-card .amount{font-size:28px;font-weight:700;}
+.balance-card .sub{font-size:14px;color:#9ca3af;margin-top:5px;}
+.ad-card{
+  background:linear-gradient(135deg,#1d4ed8,#3b82f6);
+  border-radius:22px;
+  padding:25px;text-align:center;
+  box-shadow:0 8px 25px rgba(59,130,246,0.5);
 }
-.balance-card h3 { font-size: 15px; color: #9ca3af; margin-bottom: 5px; }
-.balance-card .amount { font-size: 28px; font-weight: 700; }
-.balance-card .sub { font-size: 14px; color: #9ca3af; margin-top: 5px; }
-
-/* Reklam Kartı */
-.ad-card {
-  background: linear-gradient(135deg, #6d28d9, #8b5cf6);
-  border-radius: 22px;
-  padding: 25px;
-  box-shadow: 0 8px 25px rgba(139,92,246,0.4);
-  text-align: center;
+.ad-card h2{font-size:22px;font-weight:700;margin:0;}
+.ad-card p{margin:8px 0;color:#e0e7ff;}
+.progress{height:6px;width:100%;background:rgba(255,255,255,0.15);border-radius:4px;margin:15px 0;}
+.progress-fill{height:100%;background:#fbbf24;border-radius:4px;width:0%;transition:width 0.5s ease;}
+.ad-btn{
+  width:100%;background:linear-gradient(135deg,#3b82f6,#10b981);
+  color:#fff;border:none;border-radius:16px;padding:16px;
+  font-size:18px;font-weight:700;cursor:pointer;transition:0.3s;margin-top:8px;
 }
-.ad-card h2 { font-size: 22px; font-weight: 700; margin: 0; }
-.ad-card p { margin: 8px 0; color: #e0e7ff; }
-.progress {
-  height: 6px; width: 100%; background: rgba(255,255,255,0.15);
-  border-radius: 4px; margin: 15px 0;
+.ad-btn:hover:not(:disabled){transform:scale(1.04);box-shadow:0 10px 25px rgba(16,185,129,0.4);}
+.ad-btn:disabled{background:gray;cursor:not-allowed;}
+.page{display:none;}
+.page.active{display:block;animation:fadeIn 0.5s ease;}
+.wallet-card{
+  background:rgba(255,255,255,0.05);
+  border-radius:20px;
+  padding:25px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.4);
 }
-.progress-fill {
-  height: 100%; background: #fbbf24; border-radius: 4px;
-  width: 0%; transition: width 0.5s ease;
+.wallet-card select,.wallet-card input{
+  width:100%;padding:12px;margin-top:10px;border:none;
+  border-radius:10px;font-size:15px;background:rgba(255,255,255,0.1);color:#fff;
 }
-.ad-btn {
-  width: 100%; background: linear-gradient(135deg, #3b82f6, #10b981);
-  color: white; border: none; border-radius: 16px; padding: 16px;
-  font-size: 18px; font-weight: 700; cursor: pointer; transition: 0.3s; margin-top: 8px;
+.wallet-card input::placeholder{color:#ccc;}
+.withdraw-btn{
+  width:100%;background:linear-gradient(135deg,#10b981,#3b82f6);
+  color:#fff;border:none;border-radius:14px;padding:14px;
+  font-size:16px;font-weight:700;margin-top:20px;cursor:pointer;
 }
-.ad-btn:hover:not(:disabled) { transform: scale(1.04); box-shadow: 0 10px 25px rgba(16,185,129,0.4); }
-.ad-btn:disabled { background: gray; cursor: not-allowed; }
-
-.page { display: none; }
-.page.active { display: block; animation: fadeIn 0.5s ease; }
-
-.task-btn, .withdraw-btn {
-  width: 100%; background: linear-gradient(135deg, #10b981, #3b82f6);
-  color: #fff; border: none; border-radius: 14px; padding: 14px;
-  font-size: 16px; font-weight: 700; margin-top: 20px; cursor: pointer;
+.alert{background:#ef4444;padding:10px;border-radius:12px;text-align:center;margin-top:10px;display:none;font-weight:600;}
+.success{background:#22c55e;}
+.menu{
+  position:fixed;bottom:15px;left:50%;transform:translateX(-50%);
+  width:90%;display:flex;justify-content:space-around;
+  background:rgba(30,41,59,0.9);padding:12px;border-radius:25px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.5);backdrop-filter:blur(6px);
 }
-.task-btn:disabled { background: #555; cursor: not-allowed; }
-
-.wallet-card {
-  background: rgba(255,255,255,0.05);
-  border-radius: 20px;
-  padding: 25px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+.menu button{
+  flex:1;margin:0 4px;padding:10px;font-size:15px;
+  background:linear-gradient(135deg,#3b82f6,#10b981);
+  color:#fff;border:none;border-radius:15px;font-weight:600;
 }
-.wallet-card input, .wallet-card select {
-  width: 100%; padding: 12px; margin-top: 10px; border: none;
-  border-radius: 10px; font-size: 15px; background: rgba(255,255,255,0.1); color: #fff;
-}
-.wallet-card input::placeholder { color: #ccc; }
-
-.alert { background:#ef4444; padding:10px; border-radius:12px; text-align:center; margin-top:10px; display:none; font-weight:600; }
-.success { background:#22c55e; }
-
-.menu {
-  position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%);
-  width: 90%; display: flex; justify-content: space-around;
-  background: rgba(30,41,59,0.9); padding: 12px; border-radius: 25px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.5); backdrop-filter: blur(6px);
-}
-.menu button {
-  flex: 1; margin: 0 4px; padding: 10px; font-size: 15px;
-  background: linear-gradient(135deg,#3b82f6,#10b981);
-  color: #fff; border: none; border-radius: 15px; font-weight: 600;
-}
-.timer { text-align: center; font-size: 16px; color: #facc15; margin-top: 10px; }
+.timer{text-align:center;font-size:16px;color:#facc15;margin-top:10px;}
 </style>
 </head>
 <body>
-
-<header>Qazanc AZ</header>
+<header>💎 Qazanc AZ</header>
 
 <div class="container">
   <!-- Reklam -->
@@ -129,7 +104,7 @@ header {
       <h2>50 Reklam İzlə</h2>
       <p>0.15 ₼ qazanın</p>
       <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
-      <p style="font-size:14px;">Reklam izlənildi: <span id="adsCount">0</span> / 50</p>
+      <p style="font-size:14px;">İzlənilib <span id="adsCount">0</span> / 50</p>
       <button class="ad-btn" id="adBtn">▶ Reklam İzlə</button>
       <div class="timer" id="timer"></div>
     </div>
@@ -138,7 +113,7 @@ header {
   <!-- Görəvlər -->
   <div id="tasksPage" class="page">
     <h2>🎯 Görəvlər</h2>
-    <button class="task-btn" id="joinChannelBtn">Kanala Qoşul – 0.05 ₼</button>
+    <button class="ad-btn" id="joinChannelBtn">📢 Kanala Qoşul – 0.05 ₼</button>
     <p style="text-align:center;margin-top:10px;">
       <a href="https://t.me/qazancazicmasi" target="_blank" style="color:#60a5fa;">@qazancazicmasi kanalına keç</a>
     </p>
@@ -154,10 +129,10 @@ header {
         <option value="azercell">Azercell</option>
         <option value="bakcell">Bakcell</option>
         <option value="nar">Nar</option>
-        <option value="bank">Birbank</option>
-        <option value="usdt">USDT</option>
+        <option value="bank">Bank Kartı</option>
+        <option value="usdt">USDT (TON)</option>
       </select>
-      <input type="text" id="details" placeholder="Nömrə / Kart / USDT Adresi">
+      <input type="text" id="details" placeholder="Nömrə / Kart / TON Adresi">
       <input type="number" id="amount" placeholder="Məbləğ (AZN)">
       <button class="withdraw-btn" id="withdrawBtn">Çıxarış Et</button>
       <div class="alert" id="withdrawAlert"></div>
@@ -165,15 +140,14 @@ header {
   </div>
 </div>
 
-<!-- Aşağı menyu -->
 <div class="menu">
-  <button onclick="showPage('adsPage')">Reklam</button>
-  <button onclick="showPage('tasksPage')">Görəvlər</button>
-  <button onclick="showPage('walletPage')">Cüzdan</button>
+  <button onclick="showPage('adsPage')">🏠 Ana Səhifə</button>
+  <button onclick="showPage('tasksPage')">🎯 Görəvlər</button>
+  <button onclick="showPage('walletPage')">💳 Cüzdan</button>
 </div>
 
 <script>
-const BALANCE_KEY='balance', DATE_KEY='date', COUNT_KEY='adsCount';
+const BALANCE_KEY='balance',DATE_KEY='date',COUNT_KEY='adsCount';
 let balance=Number(localStorage.getItem(BALANCE_KEY)||0);
 let adsWatched=Number(localStorage.getItem(COUNT_KEY)||0);
 const balanceEl=document.getElementById('balance');
@@ -182,18 +156,21 @@ const adBtn=document.getElementById('adBtn');
 const timerEl=document.getElementById('timer');
 const progressFill=document.getElementById('progressFill');
 const adsCountEl=document.getElementById('adsCount');
-const LIMIT=50, REWARD=0.003;
+const LIMIT=50,REWARD=0.003;
 
 function todayAZ(){
   const now=new Date();
-  return new Date(now.getTime()+ (4*3600000 - now.getTimezoneOffset()*60000)).toISOString().split('T')[0];
+  return new Date(now.getTime()+(4*3600000-now.getTimezoneOffset()*60000)).toISOString().split('T')[0];
 }
 function resetDaily(){
   const saved=localStorage.getItem(DATE_KEY);
-  if(saved!==todayAZ()){ localStorage.setItem(DATE_KEY,todayAZ()); localStorage.setItem(COUNT_KEY,'0'); adsWatched=0; }
+  if(saved!==todayAZ()){
+    localStorage.setItem(DATE_KEY,todayAZ());
+    localStorage.setItem(COUNT_KEY,'0');
+    adsWatched=0;
+  }
 }
 resetDaily();
-
 function updateUI(){
   localStorage.setItem(BALANCE_KEY,balance.toFixed(4));
   balanceEl.textContent=balance.toFixed(4);
@@ -204,55 +181,57 @@ function updateUI(){
 updateUI();
 
 adBtn.addEventListener('click',()=>{
-  if(adsWatched>=LIMIT){
-    timerEl.textContent='📢 Bu gün bütün reklamları izlədiniz!';
-    return;
-  }
-  if(typeof show_10024800==='function'){ show_10024800(); }
+  if(adsWatched>=LIMIT){timerEl.textContent='📣 Bu gün bütün reklamları izlədiniz!';return;}
+  if(typeof show_10024800==='function'){show_10024800();}
   adBtn.disabled=true;
   timerEl.textContent='İzlənir...';
   setTimeout(()=>{
-    balance+=REWARD; adsWatched++; localStorage.setItem(COUNT_KEY,adsWatched);
-    updateUI(); timerEl.textContent='✅ +0.003 ₼ əlavə olundu!';
+    balance+=REWARD;
+    adsWatched++;
+    localStorage.setItem(COUNT_KEY,adsWatched);
+    updateUI();
+    timerEl.textContent='✅ +0.003 ₼ əlavə olundu!';
     let wait=10;
     const interval=setInterval(()=>{
-      timerEl.textContent=`⏳ Növbəti reklam üçün gözləyin: ${wait--}s`;
-      if(wait<0){ clearInterval(interval); adBtn.disabled=false; timerEl.textContent=''; }
+      timerEl.textContent=`⏳ Növbəti reklam üçün ${wait--}s`;
+      if(wait<0){clearInterval(interval);adBtn.disabled=false;timerEl.textContent='';}
     },1000);
   },2000);
 });
 
-// Görəv
 const joinBtn=document.getElementById('joinChannelBtn');
-if(localStorage.getItem('joined')) joinBtn.disabled=true;
+if(localStorage.getItem('joined')){
+  joinBtn.disabled=true;
+  joinBtn.textContent='✅ Bonus alındı!';
+}
 joinBtn.onclick=()=>{
-  if(localStorage.getItem('joined')) return;
-  balance+=0.05; updateUI(); localStorage.setItem('joined','1');
-  joinBtn.disabled=true; window.open('https://t.me/qazancazicmasi','_blank');
+  if(localStorage.getItem('joined'))return;
+  balance+=0.05;updateUI();
+  localStorage.setItem('joined','1');
+  joinBtn.disabled=true;
+  joinBtn.textContent='✅ Bonus alındı!';
+  window.open('https://t.me/qazancazicmasi','_blank');
 };
 
-// Çıxarış
 document.getElementById('withdrawBtn').onclick=()=>{
   const method=document.getElementById('method').value;
   const details=document.getElementById('details').value.trim();
   const amt=Number(document.getElementById('amount').value);
   const alertBox=document.getElementById('withdrawAlert');
-  alertBox.style.display='none';
+  alertBox.style.display='none';alertBox.classList.remove('success');
   if(!method){alertBox.textContent='Metod seçin';alertBox.style.display='block';return;}
   if(!details){alertBox.textContent='Detalları daxil edin';alertBox.style.display='block';return;}
   let min=method==='usdt'?17:3;
   if(amt<min){alertBox.textContent=`Minimum məbləğ ${min} AZN-dir`;alertBox.style.display='block';return;}
-  if(amt>balance){alertBox.textContent='Balansda kifayət qədər vəsait yoxdur';alertBox.style.display='block';return;}
-  balance-=amt; updateUI();
-  alertBox.textContent='✅ Çıxarış uğurla göndərildi!';alertBox.classList.add('success');alertBox.style.display='block';
+  if(amt>balance){alertBox.textContent='Balans kifayət etmir';alertBox.style.display='block';return;}
+  balance-=amt;updateUI();
+  alertBox.textContent='✅ Çıxarış təsdiqləndi!';alertBox.classList.add('success');alertBox.style.display='block';
 };
 
-// Səhifə keçidi
 function showPage(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
 </script>
-
 </body>
 </html>
