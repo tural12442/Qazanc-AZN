@@ -13,18 +13,35 @@
   --accent:#22c55e;--muted:#9ca3af;--blue:#1e3a8a;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Inter',sans-serif;background:linear-gradient(180deg,var(--bg1),var(--bg2));color:#fff;min-height:100vh;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;}
-.container{max-width:480px;margin:auto;padding:20px;}
+body{
+  font-family:'Inter',sans-serif;
+  background:linear-gradient(180deg,var(--bg1),var(--bg2));
+  color:#fff;min-height:100vh;
+  user-select:none;-webkit-user-select:none;
+  -webkit-tap-highlight-color:transparent;
+}
+.container{max-width:480px;margin:auto;padding:20px;padding-top:45px;}
 .page{display:none;animation:fadeIn .4s ease;}
 .page.active{display:block;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
 
-.balance-card{background:rgba(255,255,255,.05);border-radius:18px;padding:20px;margin-bottom:22px;box-shadow:0 6px 18px rgba(0,0,0,.3);}
+.balance-card{
+  background:rgba(255,255,255,.05);
+  border-radius:18px;padding:20px;
+  margin-bottom:28px;
+  box-shadow:0 6px 18px rgba(0,0,0,.3);
+}
 .balance-card h3{font-size:14px;color:#a5b4fc;}
 .balance-card .amount{font-size:32px;font-weight:700;margin-top:5px;}
 .balance-card .usd{font-size:15px;color:#22c55e;margin-top:4px;}
 
-.ad-card{background:rgba(255,255,255,.04);border-radius:18px;padding:20px;text-align:center;box-shadow:0 6px 25px rgba(0,0,0,.4);}
+.ad-card{
+  background:rgba(255,255,255,.04);
+  border-radius:18px;padding:20px;
+  text-align:center;
+  box-shadow:0 6px 25px rgba(0,0,0,.4);
+  margin-top:18px;
+}
 .ad-card h2{font-size:22px;color:#7dd3fc;margin-bottom:5px;}
 .ad-card p{margin:4px 0;color:#cbd5e1;font-size:15px;}
 .stats{display:flex;justify-content:space-around;margin-top:14px;}
@@ -33,7 +50,12 @@ body{font-family:'Inter',sans-serif;background:linear-gradient(180deg,var(--bg1)
 .stat label{font-size:13px;color:#9ca3af;}
 .progress{height:8px;background:rgba(255,255,255,0.15);border-radius:6px;overflow:hidden;margin-top:16px;}
 .progress-fill{height:100%;background:var(--accent);width:0%;transition:width .4s;}
-.ad-btn{width:100%;margin-top:18px;padding:16px;font-size:18px;font-weight:700;border:none;border-radius:14px;background:var(--accent);color:#fff;cursor:pointer;transition:transform .2s;}
+.ad-btn{
+  width:100%;margin-top:18px;padding:16px;
+  font-size:18px;font-weight:700;border:none;
+  border-radius:14px;background:var(--accent);
+  color:#fff;cursor:pointer;transition:transform .2s;
+}
 .ad-btn:disabled{opacity:0.5;cursor:not-allowed;}
 .ad-btn:active{transform:scale(0.97);}
 #msg{text-align:center;margin-top:10px;font-size:15px;color:#fde68a;}
@@ -51,7 +73,13 @@ body{font-family:'Inter',sans-serif;background:linear-gradient(180deg,var(--bg1)
 .success{background:#16a34a;}
 .error{background:#ef4444;}
 
-.menu{position:fixed;bottom:15px;left:50%;transform:translateX(-50%);width:92%;display:flex;justify-content:space-around;background:rgba(17,24,39,0.95);padding:10px;border-radius:20px;box-shadow:0 6px 20px rgba(0,0,0,.5);}
+.menu{
+  position:fixed;bottom:15px;left:50%;transform:translateX(-50%);
+  width:92%;display:flex;justify-content:space-around;
+  background:rgba(17,24,39,0.95);
+  padding:10px;border-radius:20px;
+  box-shadow:0 6px 20px rgba(0,0,0,.5);
+}
 .menu button{flex:1;margin:0 4px;padding:10px;border:none;border-radius:12px;background:rgba(255,255,255,.07);color:#fff;font-weight:700;}
 .menu button.active{background:var(--accent);}
 </style>
@@ -126,17 +154,32 @@ body{font-family:'Inter',sans-serif;background:linear-gradient(180deg,var(--bg1)
 </div>
 
 <script>
-const LIMIT = 75, REWARD = 0.0020;
-const BAL_KEY='bal',COUNT_KEY='cnt',DATE_KEY='date',JOIN_KEY='joined';
+const LIMIT=75,REWARD=0.0020;
+const BAL_KEY='bal',COUNT_KEY='cnt',RESET_KEY='resetTime',JOIN_KEY='joined';
 
 function safeGet(k,d=0){try{return JSON.parse(localStorage.getItem(k))??d;}catch{return d;}}
 function safeSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){document.cookie=k+"="+encodeURIComponent(v)+";max-age=31536000;path=/";}}
 
 let bal=parseFloat(safeGet(BAL_KEY,0));
 let cnt=parseInt(safeGet(COUNT_KEY,0));
+let resetTime=safeGet(RESET_KEY,null);
 
-function todayUTC(){return new Date().toISOString().split('T')[0];}
-if(safeGet(DATE_KEY)!==todayUTC()){cnt=0;safeSet(DATE_KEY,todayUTC());}
+function getNextResetTime(){
+  const now=new Date();
+  const reset=new Date();
+  // Azərbaycan vaxtı (UTC+4)
+  reset.setUTCHours(19,0,0,0); // UTC 19:00 = Bakı vaxtı 23:00
+  if(now.getTime()>reset.getTime()) reset.setDate(reset.getDate()+1);
+  return reset.getTime();
+}
+
+// Əgər sıfırlanma vaxtı keçibsə, sıfırla
+if(!resetTime||Date.now()>resetTime){
+  cnt=0;
+  resetTime=getNextResetTime();
+  safeSet(RESET_KEY,resetTime);
+  safeSet(COUNT_KEY,cnt);
+}
 
 function update(){
   document.getElementById('balance').textContent=bal.toFixed(4);
