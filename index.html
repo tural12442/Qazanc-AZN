@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
 <title>Qazanc AZ</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<script src="//libtl.com/sdk.js" data-zone="10024800" data-sdk="show_10024800"></script>
+<script src="https://libtl.com/sdk.js" data-zone="10024800" data-sdk="show_10024800"></script>
 
 <style>
 :root {
@@ -103,7 +103,6 @@ body{
 .method{background:rgba(255,255,255,0.12);}
 .form{display:none;margin-top:18px;}
 
-/* 💡 Burda input dizaynı yaxşılaşdırılıb */
 .form input{
   width:100%;
   padding:12px;
@@ -117,14 +116,8 @@ body{
   outline:none;
   transition:0.2s;
 }
-.form input::placeholder{
-  color:#e2e8f0;
-  opacity:0.8;
-}
-.form input:focus{
-  background:rgba(255,255,255,0.25);
-  box-shadow:0 0 10px rgba(255,255,255,0.3);
-}
+.form input::placeholder{color:#e2e8f0;opacity:0.8;}
+.form input:focus{background:rgba(255,255,255,0.25);box-shadow:0 0 10px rgba(255,255,255,0.3);}
 
 .alert{display:none;margin-top:10px;padding:10px;border-radius:10px;font-weight:700;text-align:center;}
 .success{background:#16a34a;}
@@ -224,7 +217,7 @@ const LIMIT=75,REWARD=0.0020;
 const BAL_KEY='bal',COUNT_KEY='cnt',RESET_KEY='resetTime',JOIN_KEY='joined';
 
 function safeGet(k,d=0){try{return JSON.parse(localStorage.getItem(k))??d;}catch{return d;}}
-function safeSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){document.cookie=k+"="+encodeURIComponent(v)+";max-age=31536000;path=/";}}
+function safeSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 
 let bal=parseFloat(safeGet(BAL_KEY,0));
 let cnt=parseInt(safeGet(COUNT_KEY,0));
@@ -233,7 +226,7 @@ let resetTime=safeGet(RESET_KEY,null);
 function getNextResetTime(){
   const now=new Date();
   const reset=new Date();
-  reset.setUTCHours(19,0,0,0); 
+  reset.setUTCHours(19,0,0,0);
   if(now.getTime()>reset.getTime()) reset.setDate(reset.getDate()+1);
   return reset.getTime();
 }
@@ -260,12 +253,21 @@ update();
 const adBtn=document.getElementById('adBtn'),msg=document.getElementById('msg');
 adBtn.onclick=()=>{
   if(cnt>=LIMIT){msg.textContent='📣 Gündəlik limitə çatdınız!';return;}
-  try{if(typeof show_10024800==='function')show_10024800();}catch(e){}
   adBtn.disabled=true;msg.textContent='İzlənir...';
+  try{
+    if(typeof show_10024800==='function'){show_10024800();}
+  }catch(e){
+    console.warn('Reklam SDK tapılmadı, davam edilir...');
+  }
   setTimeout(()=>{
     bal+=REWARD;cnt++;update();
     msg.textContent='✅ +0.0020 ₼ əlavə olundu!';
-    let s=8;const t=setInterval(()=>{msg.textContent=`⏳ ${s--}s gözləyin`;if(s<0){clearInterval(t);adBtn.disabled=false;msg.textContent='';}},1000);
+    let s=8;
+    const t=setInterval(()=>{
+      msg.textContent=`⏳ ${s}s gözləyin`;
+      s--;
+      if(s<0){clearInterval(t);adBtn.disabled=false;msg.textContent='';}
+    },1000);
   },2500);
 };
 
@@ -280,8 +282,10 @@ joinBtn.onclick=()=>{
 };
 
 const methods=document.querySelectorAll('.method');
-const form=document.getElementById('form');const details=document.getElementById('details');
-const amount=document.getElementById('amount');const alertBox=document.getElementById('alert');
+const form=document.getElementById('form');
+const details=document.getElementById('details');
+const amount=document.getElementById('amount');
+const alertBox=document.getElementById('alert');
 let type='';
 const min={m10:3,azercell:3,bakcell:3,nar:3,bank:3,usdt:17};
 const ph={m10:'10 rəqəmli nömrə',azercell:'050xxxxxxx',bakcell:'055xxxxxxx',nar:'070xxxxxxx',bank:'16 rəqəmli kart nömrəsi',usdt:'TON adresi'};
