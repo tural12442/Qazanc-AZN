@@ -223,10 +223,11 @@ let bal=parseFloat(safeGet(BAL_KEY,0));
 let cnt=parseInt(safeGet(COUNT_KEY,0));
 let resetTime=safeGet(RESET_KEY,null);
 
+// --- Hər gün saat 23:00-da sıfırlama funksiyası ---
 function getNextResetTime(){
   const now=new Date();
   const reset=new Date();
-  reset.setUTCHours(19,0,0,0);
+  reset.setHours(23,0,0,0);
   if(now.getTime()>reset.getTime()) reset.setDate(reset.getDate()+1);
   return reset.getTime();
 }
